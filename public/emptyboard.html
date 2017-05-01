@@ -317,7 +317,11 @@
                 <div id="H8" class="black">{{.B.H8.Code}}</div>
 
             </div>
-            <div class="game-info">
+           
+        </div>
+        <div class="col-right">
+        <h1> GAME PLAY</h1>
+         <div class="game-info">
                 <form id="submitMove" action="/moveform" method="POST">
                     <div class="form-group">
                         <h3>GameID:</h3>
@@ -331,12 +335,21 @@
                     <input role="button" class="btn-hot" type="submit" value="Submit">
                 </form>
             </div>
-        </div>
-        <div class="col-right">
             
+            <h1> GAME CONTROLS </h1>
+			
+			<form id="createGame" action="/create" method="POST">
+                    <h3>name:</h3>
+                    <input id="tobox" class="form-field" type="text" name="name">
+                    <br>
+                    <input role="button" class="btn-hot" type="submit" value="Submit">
+                </form>
 
             <button id="toggleReverse" class="btn-hot"><i class="fa fa-arrow-right" aria-hidden="true"></i>
 Click to toggle</button>
+
+<button id="toggleReverse" class="btn-hot"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+Join as player 2</button>
         </div>
     </div>
 </body>

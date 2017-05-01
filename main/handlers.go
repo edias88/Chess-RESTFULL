@@ -17,12 +17,56 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Welcome!")
+	
+    //vars := mux.Vars(r)
+	sgid := "1"
+	gid, err := strconv.Atoi(sgid)
+
+	t := template.New("emptyboard.html")
+	temp, err := t.ParseFiles("../public/emptyboard.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	game := *FindGame(gid)
+	board := game.Board
+
+	err = temp.Execute(w,
+		struct {
+			B  Board
+			G  Game
+			Ip string
+		}{board, game, r.Host})
+	if err != nil {
+		log.Fatal(err)
+	}
+    
+    //fmt.Fprintln(w, "Welcome!")
 }
 
 func ChessIndex(w http.ResponseWriter, r *http.Request) {
+	//vars := mux.Vars(r)
+	sgid := "1"
+	gid, err := strconv.Atoi(sgid)
 
-	fmt.Fprintln(w, "welcome to chess")
+	t := template.New("emptyboard.html")
+	temp, err := t.ParseFiles("../public/emptyboard.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	game := *FindGame(gid)
+	board := game.Board
+
+	err = temp.Execute(w,
+		struct {
+			B  Board
+			G  Game
+			Ip string
+		}{board, game, r.Host})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//fmt.Fprintln(w, "welcome to chess")
 }
 
 func ChessState(w http.ResponseWriter, r *http.Request) {
@@ -221,22 +265,3 @@ func TemplateBoard(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetSandaloneChat(w http.ResponseWriter, r *http.Request) {
-	t := template.New("home.html")
-	homeTemp, err := t.ParseFiles("../public/home.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", 405)
-		return
-	}
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Println(r.Host)
-	homeTemp.Execute(w, r.Host)
-}
-
-func ServeSocket(w http.ResponseWriter, r *http.Request) {
-	ServeWs(hub, w, r)
-}
